@@ -4,26 +4,26 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.Char;
-import java.time.format.CharValueFormatter;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Клас BasicDataOperationUsingSet надає методи для виCharконання основних операцiй з даними типу Char.
+ * Клас BasicDataOperationUsingSet надає методи для виcharконання основних операцiй з даними типу Char.
  * 
- * <p>Цей клас зчитує данi з файлу "list/Char.data", сортує їх та виконує пошук значення в масивi та множинi.</p>
+ * <p>Цей клас зчитує данi з файлу "list/char.data", сортує їх та виконує пошук значення в масивi та множинi.</p>
  * 
  * <p>Основнi методи:</p>
  * <ul>
  *   <li>{@link #main(String[])} - Точка входу в програму.</li>
  *   <li>{@link #doDataOperation()} - Виконує основнi операцiї з даними.</li>
- *   <li>{@link #sortArray()} - Сортує масив Char.</li>
- *   <li>{@link #searCharray()} - Виконує пошук значення в масивi Char.</li>
- *   <li>{@link #findMinAndMaxInArray()} - Знаходить мiнiмальне та максимальне значення в масивi Char.</li>
- *   <li>{@link #searchSet()} - Виконує пошук значення в множинi Char.</li>
- *   <li>{@link #findMinAndMaxInSet()} - Знаходить мiнiмальне та максимальне значення в множинi Char.</li>
+ *   <li>{@link #sortArray()} - Сортує масив LocalDateTime.</li>
+ *   <li>{@link #searray()} - Виконує пошук значення в масивi LocalDateTime.</li>
+ *   <li>{@link #findMinAndMaxInArray()} - Знаходить мiнiмальне та максимальне значення в масивi LocalDateTime.</li>
+ *   <li>{@link #searchSet()} - Виконує пошук значення в множинi LocalDateTime.</li>
+ *   <li>{@link #findMinAndMaxInSet()} - Знаходить мiнiмальне та максимальне значення в множинi LocalDateTime.</li>
  *   <li>{@link #compareArrayAndSet()} - Порiвнює елементи масиву та множини.</li>
  * </ul>
  * 
@@ -39,9 +39,9 @@ import java.util.Set;
  * 
  * <p>Змiннi екземпляра:</p>
  * <ul>
- *   <li>{@link #CharValueToSearch} - Значення Char для пошуку.</li>
- *   <li>{@link #CharValueArray} - Масив Char.</li>
- *   <li>{@link #CharValueSet} - Множина Char.</li>
+ *   <li>{@link #dateTimeValueToSearch} - Значення LocalDateTime для пошуку.</li>
+ *   <li>{@link #dateTimeArray} - Масив LocalDateTime.</li>
+ *   <li>{@link #dateTimeSet} - Множина LocalDateTime.</li>
  * </ul>
  * 
  * <p>Приклад використання:</p>
@@ -52,10 +52,10 @@ import java.util.Set;
  * </pre>
  */
 public class BasicDataOperationUsingSet {
-    static final String PATH_TO_DATA_FILE = "list/Char.data";
+    static final String PATH_TO_DATA_FILE = "list/char.data";
 
-    Char ValueToSearch;
-    Char[] ValueArray;
+    char ValueToSearch;
+    char[] ValueArray;
     Set<Char> ValueSet = new HashSet<>();
 
     public static void main(String[] args) {  
@@ -74,7 +74,7 @@ public class BasicDataOperationUsingSet {
         }
 
         String valueToSearch = args[0];
-        this.ValueToSearch = Char.parse(valueToSearch, CharValueFormatter.ISO_DATE_TIME);
+        this.ValueToSearch = line.charAt(0).parse(valueToSearch, DateTimeFormatter.ISO_DATE_TIME);
 
         ValueArray = Utils.readArrayFromFile(PATH_TO_DATA_FILE);
         ValueSet = new HashSet<>(Arrays.asList(ValueArray));
@@ -83,16 +83,16 @@ public class BasicDataOperationUsingSet {
     /**
      * Виконує основнi операцiї з даними.
      * 
-     * Метод зчитує масив та множину об'єктiв Char з файлу, сортує їх та виконує пошук значення.
+     * Метод зчитує масив та множину об'єктiв LocalDateTime з файлу, сортує їх та виконує пошук значення.
      */
     private void doDataOperation() {
         // операцiї з масивом дати та часу
-        searCharray();
+        searchArray();
         findMinAndMaxInArray();
 
         sortArray();
 
-        searCharray();
+        searchArray();
         findMinAndMaxInArray();
 
         // операцiї з HashSet дати та часу
@@ -105,7 +105,7 @@ public class BasicDataOperationUsingSet {
     }
 
     /**
-     * Сортує масив об'єктiв Char та виводить початковий i вiдсортований масиви.
+     * Сортує масив об'єктiв LocalDateTime та виводить початковий i вiдсортований масиви.
      * Вимiрює та виводить час, витрачений на сортування масиву в наносекундах.
      */
     private void sortArray() {
@@ -119,10 +119,10 @@ public class BasicDataOperationUsingSet {
     /**
      * Метод для пошуку значення в масивi дати i часу.
      */
-    private void searCharray() {
+    private void searchArray() {
         long startTime = System.nanoTime();
 
-        int index = Arrays.binarySearch(this.CharValueArray, CharValueValueToSearch);
+        int index = Arrays.binarySearch(this.dateTimeArray, dateTimeValueToSearch);
 
         Utils.printOperationDuration(startTime, "пошук заданого типу");
 
@@ -134,7 +134,7 @@ public class BasicDataOperationUsingSet {
     }
 
     /**
-     * Знаходить мiнiмальне та максимальне значення в масивi Char.
+     * Знаходить мiнiмальне та максимальне значення в масивi LocalDateTime.
      */
     private void findMinAndMaxInArray() {
         if (ValueArray == null || ValueArray.length == 0) {
@@ -144,14 +144,14 @@ public class BasicDataOperationUsingSet {
 
         long startTime = System.nanoTime();
 
-        Char min = ValueArray[0];
-        Char max = ValueArray[0];
+        char min = ValueArray[0];
+        char max = ValueArray[0];
 
-        for (Char Value : ValueArray) {
-            if (Value.isBefore(min)) {
+        for (char Value : ValueArray) {
+            if (Value < min) {
                 min = Value;
             }
-            if (Value.isAfter(max)) {
+            if (charValue > max) {
                 max = Value;
             }
         }
@@ -180,7 +180,7 @@ public class BasicDataOperationUsingSet {
     }
 
     /**
-     * Знаходить мiнiмальне та максимальне значення в множинi Char.
+     * Знаходить мiнiмальне та максимальне значення в множинi LocalDateTime.
      */
     private void findMinAndMaxInSet() {
         if (ValueSet == null || ValueSet.isEmpty()) {
@@ -190,8 +190,8 @@ public class BasicDataOperationUsingSet {
 
         long startTime = System.nanoTime();
 
-        Char min = Collections.min(ValueSet);
-        Char max = Collections.max(ValueSet);
+        char min = Collections.min(ValueSet);
+        char max = Collections.max(ValueSet);
 
         Utils.printOperationDuration(startTime, "пошук мiнiмальної i максимальної дати i часу в HashSet");
 
@@ -207,7 +207,7 @@ public class BasicDataOperationUsingSet {
         System.out.println("Кiлькiсть елементiв в HashSet: " + ValueSet.size());
 
         boolean allElementsMatch = true;
-        for (Char Value : ValueArray) {
+        for (char Value : ValueArray) {
             if (!ValueSet.contains(Value)) {
                 allElementsMatch = false;
                 break;
@@ -223,7 +223,7 @@ public class BasicDataOperationUsingSet {
 }
 
 /**
- * Клас Utils мiститить допомiжнi методи для роботи з даними типу Char.
+ * Клас Utils мiститить допомiжнi методи для роботи з даними типу LocalDateTime.
  */
 class Utils {
     /**
@@ -239,43 +239,42 @@ class Utils {
     }
 
     /**
-     * Зчитує масив об'єктiв Char з файлу.
+     * Зчитує масив об'єктiв LocalDateTime з файлу.
      * 
      * @param pathToFile Шлях до файлу з даними.
-     * @return Масив об'єктiв Char.
+     * @return Масив об'єктiв LocalDateTime.
      */
-    static Char[] readArrayFromFile(String pathToFile) {
-        CharValueFormatter formatter = CharValueFormatter.ISO_DATE_TIME;
-        Char[] tempArray = new Char[1000];
+    static char[] readArrayFromFile(String pathToFile) {
+        char[] tempArray = new char[1000];
         int index = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
-            String line.CharAt(0);
-            while ((line.CharAt(0) = br.readline.CharAt(0)()) != null) {
-                Char Value = Char.parse(line.CharAt(0), formatter);
+            String line;
+            while ((line = br.readLine()) != null) {
+                char Value = line.charAt(0);
                 tempArray[index++] = Value;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-       Char[] finalArray = new Char[index];
+       char[] finalArray = new char[index];
         System.arraycopy(tempArray, 0, finalArray, 0, index);
 
         return finalArray;
     }
 
     /**
-     * Записує масив об'єктiв Char у файл.
+     * Записує масив об'єктiв char у файл.
      * 
-     * @param ValueArray Масив об'єктiв Char.
+     * @param ValueArray Масив об'єктiв LocalDateTime.
      * @param pathToFile Шлях до файлу для запису.
      */
-    static void writeArrayToFile(Char[] ValueArray, String pathToFile) {
+    static void writeArrayToFile(char[] ValueArray, String pathToFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToFile))) {
-            for (Char Value : ValueArray) {
-                writer.write(Value.toString());
-                writer.newline.CharAt(0)();
+            for (char Value : ValueArray) {
+                writer.write(Value);
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
