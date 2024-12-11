@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Char;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Клас BasicDataOperationUsingSet надає методи для виcharконання основних операцiй з даними типу Char.
+ * Клас BasicDataOperationUsingSet надає методи для виcharконання основних операцiй з даними типу Character.
  * 
  * <p>Цей клас зчитує данi з файлу "list/char.data", сортує їх та виконує пошук значення в масивi та множинi.</p>
  * 
@@ -56,7 +55,7 @@ public class BasicDataOperationUsingSet {
 
     char ValueToSearch;
     char[] ValueArray;
-    Set<Char> ValueSet = new HashSet<>();
+    Set<Character> ValueSet = new HashSet<>();
 
     public static void main(String[] args) {  
         BasicDataOperationUsingSet basicDataOperationUsingSet = new BasicDataOperationUsingSet(args);
@@ -74,7 +73,7 @@ public class BasicDataOperationUsingSet {
         }
 
         String valueToSearch = args[0];
-        this.ValueToSearch = line.charAt(0).parse(valueToSearch, DateTimeFormatter.ISO_DATE_TIME);
+        this.ValueToSearch = line.charAt(0).parse(valueToSearch);
 
         ValueArray = Utils.readArrayFromFile(PATH_TO_DATA_FILE);
         ValueSet = new HashSet<>(Arrays.asList(ValueArray));
