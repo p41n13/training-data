@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -53,8 +52,8 @@ import java.util.Set;
 public class BasicDataOperationUsingSet {
     static final String PATH_TO_DATA_FILE = "list/char.data";
 
-    char ValueToSearch;
-    char[] ValueArray;
+    Character ValueToSearch;
+    Character[] ValueArray;
     Set<Character> ValueSet = new HashSet<>();
 
     public static void main(String[] args) {  
@@ -73,7 +72,7 @@ public class BasicDataOperationUsingSet {
         }
 
         String valueToSearch = args[0];
-        this.ValueToSearch = line.charAt(0).parse(valueToSearch);
+        this.ValueToSearch = valueToSearch.charAt(0);
 
         ValueArray = Utils.readArrayFromFile(PATH_TO_DATA_FILE);
         ValueSet = new HashSet<>(Arrays.asList(ValueArray));
@@ -85,7 +84,7 @@ public class BasicDataOperationUsingSet {
      * Метод зчитує масив та множину об'єктiв LocalDateTime з файлу, сортує їх та виконує пошук значення.
      */
     private void doDataOperation() {
-        // операцiї з масивом дати та часу
+        // операцiї з масивом символів
         searchArray();
         findMinAndMaxInArray();
 
@@ -94,7 +93,7 @@ public class BasicDataOperationUsingSet {
         searchArray();
         findMinAndMaxInArray();
 
-        // операцiї з HashSet дати та часу
+        // операцiї з HashSet символів
         searchSet();
         findMinAndMaxInSet();
         compareArrayAndSet();
@@ -112,16 +111,16 @@ public class BasicDataOperationUsingSet {
 
         Arrays.sort(ValueArray);
 
-        Utils.printOperationDuration(startTime, "сортування масиву дати i часу");
+        Utils.printOperationDuration(startTime, "сортування масиву символів");
     }
 
     /**
-     * Метод для пошуку значення в масивi дати i часу.
+     * Метод для пошуку значення в масивi символів.
      */
     private void searchArray() {
         long startTime = System.nanoTime();
 
-        int index = Arrays.binarySearch(this.dateTimeArray, dateTimeValueToSearch);
+        int index = Arrays.binarySearch(this.ValueArray, ValueToSearch);
 
         Utils.printOperationDuration(startTime, "пошук заданого типу");
 
@@ -143,33 +142,33 @@ public class BasicDataOperationUsingSet {
 
         long startTime = System.nanoTime();
 
-        char min = ValueArray[0];
-        char max = ValueArray[0];
+        Character min = ValueArray[0];
+        Character max = ValueArray[0];
 
-        for (char Value : ValueArray) {
+        for (Character Value : ValueArray) {
             if (Value < min) {
                 min = Value;
             }
-            if (charValue > max) {
+            if (Value > max) {
                 max = Value;
             }
         }
 
-        Utils.printOperationDuration(startTime, "пошук мiнiмальної i максимальної дати i часу в масивi");
+        Utils.printOperationDuration(startTime, "пошук мiнiмальноговіф i максимального символа в масивi");
 
         System.out.println("Мiнiмальне значення в масивi: " + min);
         System.out.println("Максимальне значення в масивi: " + max);
     }
 
     /**
-     * Метод для пошуку значення в множинi дати i часу.
+     * Метод для пошуку значення в множинi символів.
      */
     private void searchSet() {
         long startTime = System.nanoTime();
 
         boolean isFound = this.ValueSet.contains(ValueToSearch);
 
-        Utils.printOperationDuration(startTime, "пошук в HashSet дати i часу");
+        Utils.printOperationDuration(startTime, "пошук в HashSet символів");
 
         if (isFound) {
             System.out.println("Значення '" + ValueToSearch + "' знайдено в HashSet");
@@ -189,10 +188,10 @@ public class BasicDataOperationUsingSet {
 
         long startTime = System.nanoTime();
 
-        char min = Collections.min(ValueSet);
-        char max = Collections.max(ValueSet);
+        Character min = Collections.min(ValueSet);
+        Character max = Collections.max(ValueSet);
 
-        Utils.printOperationDuration(startTime, "пошук мiнiмальної i максимальної дати i часу в HashSet");
+        Utils.printOperationDuration(startTime, "пошук мiнiмального i максимального символа в HashSet");
 
         System.out.println("Мiнiмальне значення в HashSet: " + min);
         System.out.println("Максимальне значення в HashSet: " + max);
@@ -206,7 +205,7 @@ public class BasicDataOperationUsingSet {
         System.out.println("Кiлькiсть елементiв в HashSet: " + ValueSet.size());
 
         boolean allElementsMatch = true;
-        for (char Value : ValueArray) {
+        for (Character Value : ValueArray) {
             if (!ValueSet.contains(Value)) {
                 allElementsMatch = false;
                 break;
@@ -243,35 +242,35 @@ class Utils {
      * @param pathToFile Шлях до файлу з даними.
      * @return Масив об'єктiв LocalDateTime.
      */
-    static char[] readArrayFromFile(String pathToFile) {
-        char[] tempArray = new char[1000];
+    static Character[] readArrayFromFile(String pathToFile) {
+        Character[] tempArray = new Character[1000];
         int index = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(pathToFile))) {
             String line;
             while ((line = br.readLine()) != null) {
-                char Value = line.charAt(0);
+                Character Value = line.charAt(0);
                 tempArray[index++] = Value;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-       char[] finalArray = new char[index];
+       Character[] finalArray = new Character[index];
         System.arraycopy(tempArray, 0, finalArray, 0, index);
 
         return finalArray;
     }
 
     /**
-     * Записує масив об'єктiв char у файл.
+     * Записує масив об'єктiв Character у файл.
      * 
      * @param ValueArray Масив об'єктiв LocalDateTime.
      * @param pathToFile Шлях до файлу для запису.
      */
-    static void writeArrayToFile(char[] ValueArray, String pathToFile) {
+    static void writeArrayToFile(Character[] ValueArray, String pathToFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToFile))) {
-            for (char Value : ValueArray) {
+            for (Character Value : ValueArray) {
                 writer.write(Value);
                 writer.newLine();
             }
